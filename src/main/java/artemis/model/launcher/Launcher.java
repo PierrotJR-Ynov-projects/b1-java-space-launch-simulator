@@ -23,7 +23,7 @@ public abstract class Launcher {
     }
 
     // calculate if rocket can take off
-    public abstract double calculateMaxThrust();
+    public abstract void showInformation();
 
 
     // list of getters
