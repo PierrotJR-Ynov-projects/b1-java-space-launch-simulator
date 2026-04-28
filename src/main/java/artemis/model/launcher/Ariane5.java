@@ -8,6 +8,6 @@ public class Ariane5 extends Launcher {
 
     @Override
     public void showInformation(){
-        System.out.println("Lanceur sélectioné : " + getName());
+        System.out.println("Lanceur sélectionné : " + getName());
     }
 }
