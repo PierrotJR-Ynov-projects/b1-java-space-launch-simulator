@@ -24,4 +24,34 @@ public abstract class Launcher {
 
     // calculate if rocket can take off
     public abstract double calculateMaxThrust();
+
+
+    // list of getters
+    public String getName() {
+        return name;
+    }
+
+    public boolean isManned() {
+        return manned;
+    }
+
+    public int getMaxPerson() {
+        return maxPerson;
+    }
+
+    public double getMaxFuel() {
+        return maxFuel;
+    }
+
+    public int getMaxBooster() {
+        return maxBooster;
+    }
+
+    public double getPayLoad() {
+        return payLoad;
+    }
+
+    public double getPrice() {
+        return price;
+    }
 }
