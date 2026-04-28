@@ -8,7 +8,7 @@ public class SaturneV extends Launcher {
 
     @Override
     public void showInformation(){
-        System.out.println("Lanceur selectionné : "+getName());
+        System.out.println("Lanceur sélectionné : "+getName());
     }
 
 }

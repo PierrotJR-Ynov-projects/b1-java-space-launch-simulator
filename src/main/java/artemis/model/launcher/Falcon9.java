@@ -8,6 +8,6 @@ public class Falcon9 extends Launcher {
 
     @Override
     public void showInformation(){
-        System.out.println("Lanceur : "+getName());
+        System.out.println("Lanceur sélctionné : "+getName());
     }
 }
