@@ -4,7 +4,6 @@ public abstract class Launcher {
 
     private String name;
     private boolean manned;
-    private int maxPerson;
     private double maxFuel;
     private int maxBooster; // it's the number max of booster that rocket support
     private double payLoad; // it's the mass can transport the rocket without his mass
@@ -15,7 +14,6 @@ public abstract class Launcher {
 
         this.name = name;
         this.manned = manned;
-        this.maxPerson = maxPerson;
         this.maxFuel = maxFuel;
         this.maxBooster = maxBooster;
         this.payLoad = payLoad;
@@ -33,10 +31,6 @@ public abstract class Launcher {
 
     public boolean isManned() {
         return manned;
-    }
-
-    public int getMaxPerson() {
-        return maxPerson;
     }
 
     public double getMaxFuel() {
