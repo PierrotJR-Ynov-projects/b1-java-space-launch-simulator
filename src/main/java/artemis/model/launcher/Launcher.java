@@ -22,7 +22,7 @@ public abstract class Launcher {
         this.price = price;
     }
 
-    // calculate if rocket can take off
+    // method to show information about the launcher  choose
     public abstract void showInformation();
 
 
