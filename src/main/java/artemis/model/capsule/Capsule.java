@@ -15,8 +15,4 @@ public abstract class Capsule {
         this.mass = mass;
         this.price = price;
     }
-
-    public String getName() {
-        return name;
-    }
 }
