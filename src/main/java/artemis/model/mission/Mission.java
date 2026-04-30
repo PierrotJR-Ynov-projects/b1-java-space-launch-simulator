@@ -17,7 +17,7 @@ public abstract class Mission {
     }
 
     public abstract void missionCompleted();
-    public abstract void description();
+    public abstract void description(); // explain what is the mission's goal
 
     public String getName(){return name;}
     public boolean getManned(){return manned;}
