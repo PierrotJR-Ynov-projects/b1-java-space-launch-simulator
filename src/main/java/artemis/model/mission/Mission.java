@@ -5,24 +5,26 @@ public abstract class Mission {
     private String name;
     private boolean manned;
     private double distance;
-    private double time;
+    private double timeMax; // in days
+    private double timeMin;
     private double fuelCoefficient;
 
-    public Mission(String name, boolean manned, double distance, double time, double fuelCoefficient){
+    public Mission(String name, boolean manned, double distance, double timeMax,double timeMin, double fuelCoefficient){
         this.name = name;
         this.manned = manned;
         this.distance = distance;
-        this.time = time;
+        this.timeMax = timeMax;
+        this.timeMin = timeMin;
         this.fuelCoefficient = fuelCoefficient;
     }
 
-    public abstract void missionCompleted();
-    public abstract void description(); // explain what is the mission's goal
+    public abstract String showDescription(); // explain what is the mission's goal
 
     public String getName(){return name;}
     public boolean getManned(){return manned;}
     public double getDistance(){return distance;}
-    public double getTime(){return time;}
+    public double getTimeMax(){return timeMax;}
+    public double getTimeMin(){return timeMin;}
     public double getFuelCoefficient(){return fuelCoefficient;}
 
 }
