@@ -32,5 +32,4 @@ public class Rocket{
     public Capsule getCapsule(){ return capsule; }
     public List<Booster> getBooster(){ return boosters; }
 
-
 }
