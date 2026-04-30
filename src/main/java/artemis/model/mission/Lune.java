@@ -3,7 +3,7 @@ package artemis.model.mission;
 public class Lune extends Mission{
 
     public Lune(){
-        super("Lune",true,400000,10,8,0.005);
+        super("Lune",true,400000,"8 à 10 jours",0.005);
     }
 
     @Override
