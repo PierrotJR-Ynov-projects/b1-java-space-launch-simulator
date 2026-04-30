@@ -7,11 +7,7 @@ public class Lune extends Mission{
     }
 
     @Override
-    public String showDescription(){
+    public String showDescription() {
         return "Mission : Réaliser un aller-retour sur la Lune dans le but d'obtenir de la roche lunaire.";
     }
-    public void missionCompleted(){
-        return false;
-    }
-
 }
