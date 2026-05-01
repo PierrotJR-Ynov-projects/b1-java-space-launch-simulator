@@ -1,6 +1,6 @@
 package artemis.model.booster;
 
-public abstract class Booster {
+public class Booster {
 
     private String name;
     private double extraBoost; // in kN
@@ -12,5 +12,24 @@ public abstract class Booster {
         this.extraBoost = extraBoost;
         this.mass = mass;
         this.price = price;
+    }
+
+    public String inforamtions(){
+        return this.name + " Masse : " + this.mass + "t, Prix : " + this.price + "M€";
+    }
+
+    public String getName() {
+        return name;
+    }
+    public double getExtraBoost(){
+        return extraBoost;
+    }
+
+    public double getMass() {
+        return mass;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }
