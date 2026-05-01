@@ -21,7 +21,7 @@ public abstract class Launcher {
     }
 
     // method to show information about the launcher  choose
-    public abstract void showInformation();
+    public abstract double getBonusFiabilitie();
 
 
     // list of getters

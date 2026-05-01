@@ -7,7 +7,7 @@ public class SLS extends Launcher {
     }
 
     @Override
-    public void showInformation(){
-        System.out.println("Lanceur sélectionné: "+getName());
+    public double getBonusFiabilitie(){
+        return 0.00;
     }
 }

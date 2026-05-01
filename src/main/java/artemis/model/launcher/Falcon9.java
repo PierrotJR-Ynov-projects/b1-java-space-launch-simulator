@@ -7,7 +7,7 @@ public class Falcon9 extends Launcher {
     }
 
     @Override
-    public void showInformation(){
-        System.out.println("Lanceur sélectionné : "+getName());
+    public double getBonusFiabilitie(){
+        return 0.015 ;
     }
 }
