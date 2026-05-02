@@ -39,6 +39,36 @@ public class LaunchController {
         return true;
     }
 
+    public void simulateLaunch(Rocket rocket, Mission mission){
+        System.out.println("▮▮▮ Lancement de la fusée ▮▮▮");
+        System.out.println("Fusée selectionnée : " + rocket.getName());
+        System.out.println(mission.showDescription());
+        System.out.println("Coût total de la mission : " + calculateTotalPrice(rocket) + " M€");
 
+        // check persons
+        if (!checkCompability(rocket,mission)){
+            System.out.println("Erreur : Il n'est pas possible d'envoyer des personnes dans la capsule choisie ( " + rocket.getCapsule().getName() + " )");
+        }
 
+        // check fuel
+        double requiredFuel = requiredFuel(rocket, mission);
+        System.out.println("Carburant requis : " + requiredFuel + " tonnes.");
+
+        if (requiredFuel > rocket.getLauncher().getMaxFuel()) {
+            System.out.println("Erreur: Le lanceur " + rocket.getLauncher().getName() + " n'a pas la capacité de carburant suffisante (" + rocket.getLauncher().getMaxFuel() + " max)");
+            return;
+        }
+
+        // events
+        double riskAlea = 0.05;
+        double realRisk = riskAlea - rocket.getLauncher().getBonusFiabilitie();
+        double randomRoll = Math.random();
+
+        if (randomRoll > realRisk){
+            System.out.println("Echec : La fusée a subi une explosion lors de son décollage. La mission n'a pas pu être réalisée.");
+        } else {
+            System.out.println("La fusée a atteint son objectif !");
+        }
+        System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮");
+    }
 }
