@@ -69,6 +69,6 @@ public class LaunchController {
         } else {
             System.out.println("La fusée a atteint son objectif !");
         }
-        System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮");
+        System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮");
     }
 }
