@@ -64,7 +64,7 @@ public class LaunchController {
         double realRisk = riskAlea - rocket.getLauncher().getBonusFiabilitie();
         double randomRoll = Math.random();
 
-        if (randomRoll > realRisk){
+        if (randomRoll < realRisk){
             System.out.println("Echec : La fusée a subi une explosion lors de son décollage. La mission n'a pas pu être réalisée.");
         } else {
             System.out.println("La fusée a atteint son objectif !");
