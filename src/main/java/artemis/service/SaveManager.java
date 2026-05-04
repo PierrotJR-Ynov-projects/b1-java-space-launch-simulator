@@ -5,6 +5,8 @@ import artemis.model.mission.Mission;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 public class SaveManager {
@@ -25,10 +27,10 @@ public class SaveManager {
         // manual creation of the json structure
         String status = success ? "Succès" : "Échec";
         String jsonLine = "{"
-                + "\"fusee\": \"" + rocket.getName() + "\", "
-                + "\"mission\": \"" + mission.getClass().getSimpleName() + "\", "
-                + "\"statut\": \"" + status + "\", "
-                + "\"cout\": " + cost
+                + "fusee:" + rocket.getName() + ", "
+                + "mission: " + mission.getClass().getSimpleName() + ", "
+                + "statut: " + status + ", "
+                + "cout: " + cost
                 + "}";
 
         // saving the file
@@ -42,30 +44,31 @@ public class SaveManager {
     }
 
     public void readSave() {
-        System.out.println("▮▮▮ ▮▮▮ Lecture de la sauvegarde ▮▮▮ ▮▮▮");
+        System.out.println("\n▮▮▮ ▮▮▮ Lecture de la sauvegarde ▮▮▮ ▮▮▮");
 
         // check if file exist else after read file
-        java.io.File file = new java.io.File(FILE_PATH);
+        File file = new File(FILE_PATH);
         if (!file.exists()) {
             System.out.println("L'historique est vide. Aucun lancement n'a encore été effectué.");
-            System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮");
+            System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮\n");
             return;
         }
 
         // read file line by line
-        try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(FILE_PATH))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             int count = 1;
 
             // while text exist read file
             while ((line = reader.readLine()) != null) {
-                System.out.println("Vol " + count + " -> " + line);
+                String cleanLine = line.replace("{", "").replace("}", "");
+                System.out.println("Vol " + count + " : " + cleanLine);
                 count++;
             }
 
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             System.out.println("Erreur lors de la lecture du fichier : " + e.getMessage());
         }
-        System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮");
+        System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮\n");
     }
 }
