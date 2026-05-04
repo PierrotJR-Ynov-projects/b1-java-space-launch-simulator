@@ -35,9 +35,37 @@ public class SaveManager {
         try (FileWriter writer = new FileWriter(FILE_PATH, true)) {
             writer.write(jsonLine + "\n");
             System.out.println("Sauvegarde réussie dans le fichier suivant : " + FILE_PATH);
-        // handle errors
+            // handle errors
         } catch (IOException e) {
             System.out.println("Erreur lors de la sauvegarde : " + e.getMessage());
         }
+    }
+
+    public void readSave() {
+        System.out.println("▮▮▮ ▮▮▮ Lecture de la sauvegarde ▮▮▮ ▮▮▮");
+
+        // check if file exist else after read file
+        java.io.File file = new java.io.File(FILE_PATH);
+        if (!file.exists()) {
+            System.out.println("L'historique est vide. Aucun lancement n'a encore été effectué.");
+            System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮");
+            return;
+        }
+
+        // read file line by line
+        try (java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.FileReader(FILE_PATH))) {
+            String line;
+            int count = 1;
+
+            // while text exist read file
+            while ((line = reader.readLine()) != null) {
+                System.out.println("Vol " + count + " -> " + line);
+                count++;
+            }
+
+        } catch (java.io.IOException e) {
+            System.out.println("Erreur lors de la lecture du fichier : " + e.getMessage());
+        }
+        System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮");
     }
 }
