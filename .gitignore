@@ -1,4 +1,8 @@
 # Compiled class file
+
+# Data
+data/
+
 *.class
 
 # Log file
