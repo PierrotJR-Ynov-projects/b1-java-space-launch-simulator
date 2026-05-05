@@ -20,7 +20,7 @@ public class Simulator {
         boolean running = true;
 
         while (running) {
-            System.out.println("\n▮▮▮ ▮▮▮ Menu Principal ▮▮▮ ▮▮▮");
+            System.out.println("\n▮▮▮ ▮▮▮ ▮▮▮ Menu Principal ▮▮▮ ▮▮▮ ▮▮▮");
             System.out.println("1. Création d'un nouveau lancement");
             System.out.println("2. Historique des missions");
             System.out.println("3. Quitter");
@@ -47,7 +47,7 @@ public class Simulator {
     }
 
     private static void createNewLaunch(Scanner scanner, LaunchController launchController, SaveManager saveManager) {
-        System.out.println("\n▮▮▮ Création d'un nouveau lancement ▮▮▮");
+        System.out.println("\n▮▮▮ ▮▮ Création d'un nouveau lancement ▮▮ ▮▮▮");
         System.out.print("Entrez le nom de votre fusée : ");
         String rocketName = scanner.nextLine();
 
@@ -119,11 +119,11 @@ public class Simulator {
 
         // Choose the mission
         System.out.println("\nChoisissez une mission :");
-        System.out.println("1. ISS");
-        System.out.println("2. Lune");
-        System.out.println("3. Mars");
-        System.out.println("4. Orbite");
-        System.out.println("5. Pluton");
+        System.out.println("1. ISS - " + new ISS().showDescription());
+        System.out.println("2. Lune - " + new Lune().showDescription());
+        System.out.println("3. Mars - " + new Mars().showDescription());
+        System.out.println("4. Orbite - " + new Orbite().showDescription());
+        System.out.println("5. Pluton - " + new Pluton().showDescription());
         System.out.print("Choix : ");
         String missionChoice = scanner.nextLine();
         Mission mission = null;
