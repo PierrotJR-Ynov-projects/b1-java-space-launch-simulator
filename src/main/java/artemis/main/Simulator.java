@@ -48,15 +48,39 @@ public class Simulator {
 
     private static void createNewLaunch(Scanner scanner, LaunchController launchController, SaveManager saveManager) {
         System.out.println("\n▮▮▮ ▮▮ Création d'un nouveau lancement ▮▮ ▮▮▮");
+
+        // Choose the mission FIRST
+        System.out.println("\nChoisissez une mission :");
+        System.out.println("1. ISS (Habité : Non) - " + new ISS().showDescription());
+        System.out.println("2. Lune (Habité : Oui) - " + new Lune().showDescription());
+        System.out.println("3. Mars (Habité : Oui) - " + new Mars().showDescription());
+        System.out.println("4. Orbite (Habité : Non) - " + new Orbite().showDescription());
+        System.out.println("5. Pluton (Habité : Non) - " + new Pluton().showDescription());
+        System.out.print("Choix : ");
+        String missionChoice = scanner.nextLine();
+        Mission mission = null;
+        switch (missionChoice) {
+            case "1": mission = new ISS(); break;
+            case "2": mission = new Lune(); break;
+            case "3": mission = new Mars(); break;
+            case "4": mission = new Orbite(); break;
+            case "5": mission = new Pluton(); break;
+            default: 
+                System.out.println("Choix invalide. ISS sélectionnée par défaut."); 
+                mission = new ISS(); 
+                break;
+        }
+
+        System.out.println("\n--- Configuration de la fusée pour la mission : " + mission.getName() + " ---");
         System.out.print("Entrez le nom de votre fusée : ");
         String rocketName = scanner.nextLine();
 
         // Choose a launcher
         System.out.println("\nChoisissez un lanceur :");
-        System.out.println("1. Ariane 5");
-        System.out.println("2. Falcon 9");
-        System.out.println("3. SLS");
-        System.out.println("4. Saturne V");
+        System.out.println("1. Ariane 5 (Max boosters : 2, Fuel : 700t)");
+        System.out.println("2. Falcon 9 (Max boosters : 0, Fuel : 500t)");
+        System.out.println("3. SLS (Max boosters : 4, Fuel : 2500t)");
+        System.out.println("4. Saturne V (Max boosters : 0, Fuel : 3000t)");
         System.out.print("Choix : ");
         String launcherChoice = scanner.nextLine();
         Launcher launcher = null;
@@ -73,10 +97,10 @@ public class Simulator {
 
         // Choose the capsule
         System.out.println("\nChoisissez une capsule :");
-        System.out.println("1. Apollo");
-        System.out.println("2. Cargo Dragon");
-        System.out.println("3. Crew Dragon");
-        System.out.println("4. Orion");
+        System.out.println("1. Apollo (Habité, Capacité : 3 pers, Masse : 5.6t)");
+        System.out.println("2. Cargo Dragon (Non-habité, Masse : 4.2t)");
+        System.out.println("3. Crew Dragon (Habité, Capacité : 7 pers, Masse : 6.3t)");
+        System.out.println("4. Orion (Habité, Capacité : 4 pers, Masse : 10.4t)");
         System.out.print("Choix : ");
         String capsuleChoice = scanner.nextLine();
         Capsule capsule = null;
@@ -97,9 +121,9 @@ public class Simulator {
         boolean addMoreBoosters = true;
         while (addMoreBoosters && rocket.getBoosters().size() < launcher.getMaxBooster()) {
             System.out.println("\nAjouter un booster ? (Boosters actuels : " + rocket.getBoosters().size() + " / " + launcher.getMaxBooster() + ")");
-            System.out.println("1. BE-3");
-            System.out.println("2. EAP");
-            System.out.println("3. SRB");
+            System.out.println("1. BE-3 (Boost : 490kN, Masse : 20t)");
+            System.out.println("2. EAP (Boost : 6470kN, Masse : 270t)");
+            System.out.println("3. SRB (Boost : 12500kN, Masse : 590t)");
             System.out.println("4. Terminer l'ajout de boosters");
             System.out.print("Choix : ");
             String boosterChoice = scanner.nextLine();
@@ -113,30 +137,8 @@ public class Simulator {
             }
         }
         
-        if (rocket.getBoosters().size() >= launcher.getMaxBooster()) {
+        if (rocket.getBoosters().size() >= launcher.getMaxBooster() && launcher.getMaxBooster() > 0) {
             System.out.println("Limite de boosters atteinte pour ce lanceur.");
-        }
-
-        // Choose the mission
-        System.out.println("\nChoisissez une mission :");
-        System.out.println("1. ISS - " + new ISS().showDescription());
-        System.out.println("2. Lune - " + new Lune().showDescription());
-        System.out.println("3. Mars - " + new Mars().showDescription());
-        System.out.println("4. Orbite - " + new Orbite().showDescription());
-        System.out.println("5. Pluton - " + new Pluton().showDescription());
-        System.out.print("Choix : ");
-        String missionChoice = scanner.nextLine();
-        Mission mission = null;
-        switch (missionChoice) {
-            case "1": mission = new ISS(); break;
-            case "2": mission = new Lune(); break;
-            case "3": mission = new Mars(); break;
-            case "4": mission = new Orbite(); break;
-            case "5": mission = new Pluton(); break;
-            default: 
-                System.out.println("Choix invalide. ISS sélectionnée par défaut."); 
-                mission = new ISS(); 
-                break;
         }
 
         // Launch
