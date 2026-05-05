@@ -51,6 +51,13 @@ public class LaunchController {
             return false;
         }
 
+        // check payload (capsule + boosters mass)
+        double totalMass = calculateTotalMass(rocket);
+        if (totalMass > rocket.getLauncher().getPayLoad()) {
+            System.out.println("Erreur : Le poids total (" + totalMass + "t) dépasse la charge utile du lanceur " + rocket.getLauncher().getName() + " (" + rocket.getLauncher().getPayLoad() + "t max)");
+            return false;
+        }
+
         // check fuel
         double requiredFuel = requiredFuel(rocket, mission);
         System.out.println("Carburant requis : " + requiredFuel + " tonnes.");
