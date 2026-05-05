@@ -28,8 +28,19 @@ public class LaunchController {
 
     public double requiredFuel(Rocket rocket, Mission mission){
         double totalMass = calculateTotalMass(rocket);
+        
+        // Step 1: ExtraBoost impact (boosters help the lift, reducing fuel need)
+        double totalBoost = 0;
+        for (Booster b : rocket.getBoosters()) {
+            totalBoost += b.getExtraBoost();
+        }
+        
+        // Each 1000kN of boost reduces the effective mass by 1% for fuel calculation
+        double boostEfficiency = totalBoost / 100000.0; 
+        double effectiveMass = totalMass * (1 - boostEfficiency);
+        
         // formula given in the pdf
-        return totalMass * mission.getDistance() * mission.getFuelCoefficient() / 1000;
+        return effectiveMass * mission.getDistance() * mission.getFuelCoefficient() / 1000;
     }
 
     public boolean checkCompability(Rocket rocket, Mission mission){
