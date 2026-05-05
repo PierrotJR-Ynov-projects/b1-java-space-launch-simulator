@@ -21,7 +21,7 @@ public class Rocket {
     }
 
     public void addBooster(Booster newBooster){
-        if ( this.booster.size() > this.launcher.getMaxBooster() ){
+        if ( this.booster.size() < this.launcher.getMaxBooster() ){
             this.booster.add(newBooster);
         } else {
             System.out.println("Erreur : le lanceur" + this.launcher.getName() + " a atteint sa limite de " + this.launcher.getMaxBooster() + " boosters. Total de booster(s) : " + this.booster.size());
