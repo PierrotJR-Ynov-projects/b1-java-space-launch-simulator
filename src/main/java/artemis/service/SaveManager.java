@@ -27,10 +27,10 @@ public class SaveManager {
         // manual creation of the json structure
         String status = success ? "Succès" : "Échec";
         String jsonLine = "{"
-                + "fusee:" + rocket.getName() + ", "
-                + "mission: " + mission.getClass().getSimpleName() + ", "
-                + "statut: " + status + ", "
-                + "cout: " + cost
+                + "\"fusee\": \"" + rocket.getName() + "\", "
+                + "\"mission\": \"" + mission.getClass().getSimpleName() + "\", "
+                + "\"statut\": \"" + status + "\", "
+                + "\"cout\": " + cost
                 + "}";
 
         // saving the file
@@ -61,7 +61,8 @@ public class SaveManager {
 
             // while text exist read file
             while ((line = reader.readLine()) != null) {
-                String cleanLine = line.replace("{", "").replace("}", "");
+                // simple cleanup for display
+                String cleanLine = line.replace("{", "").replace("}", "").replace("\"", "");
                 System.out.println("Vol " + count + " : " + cleanLine);
                 count++;
             }
