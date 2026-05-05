@@ -141,11 +141,11 @@ public class Simulator {
 
         // Launch
         System.out.println("\nPrêt pour le lancement...");
-        launchController.simulateLaunch(rocket, mission);
+        boolean success = launchController.simulateLaunch(rocket, mission);
         double totalCost = launchController.calculateTotalPrice(rocket);
 
         // Save
-        saveManager.saveLaunch(rocket, mission, true, totalCost);
+        saveManager.saveLaunch(rocket, mission, success, totalCost);
 
 
     }
