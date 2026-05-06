@@ -1,85 +1,96 @@
-# Artemis - Simulateur de Lancement Spatial (Java)
 
-**Artemis** est un simulateur de lancement spatial en ligne de commande développé en Java. Ce projet permet de construire et de simuler le lancement de fusées en sélectionnant différents composants de la fusée. Du lanceur au choix de la mission, tout en passant par le choix de la capsule ou l'ajout de différents boosters. 
+# Artemis - Projet java B1 
 
-1. **Contexte :** Ce programme a été réalisé dans le cadre d'un projet scolaire. ( POO en Java B1 Ynov ) 
-2. **Dépôt GitHub :** [Voir le projet sur GitHub](https://github.com/PierrotJR-Ynov-projects/b1-java-space-launch-simulator)
+Artemis est un simulateur de lancement spatial, réalisé dans le cadre d'un projet scolaire. Différents choix sont permis (lanceurs, capsules ou boosters) avec un choix varié de missions. 
 
----
+## Fonctionnalités
 
-## 1. Fonctionnalités
+- Création de fusées personnalisées.
+- Gestion de la compatibilité (missions habitées vs capsules cargo).
+- Calcul dynamique du carburant nécessaire et de la charge utile (payload).
+- Historique des lancements sauvegardé au format JSON.
 
-- **Création personnalisée :**
-    - **Lanceurs :** Ariane 5, Falcon 9, SLS, Saturne V.
-    - **Capsules :** Apollo, Cargo Dragon, Crew Dragon, Orion.
-    - **Boosters :** BE-3, EAP, SRB.
-    - **Missions :** ISS, Lune, Mars, Orbite, Pluton.
-- **Vérifications et règles :**
-    - Validation de la compatibilité des vols habités.
-    - Calcul de la masse totale et du carburant requis pour accomplir la mission.
-    - Vérification de la capacité en carburant du lanceur.
-- **Système d'événements aléatoires :**
-    - Probabilité d'échec ou d'explosion au décollage en fonction de la fiabilité du lanceur.
-- **Sauvegarde et historique :**
-    - Sauvegarde automatique des lancements dans un fichier local (`data/save.json`).
-    - Possibilité de consulter l'historique de tous les lancements.
 
-## 2. Architecture du projet
+## Lancement du projet
 
-L'application est structurée autour d'une architecture orientée objet :
-
-```text
-📦 src/main/java/artemis
- ┣ 📂 main
- ┃ ┗ 📜 Simulator.java        # Menu et interactions utilisateur.
- ┣ 📂 model
- ┃ ┣ 📂 booster               # Liste des boosters.
- ┃ ┣ 📂 capsule               # Liste des capsules
- ┃ ┣ 📂 launcher              # Liste des lanceurs.
- ┃ ┣ 📂 mission               # Liste des missions.
- ┃ ┗ 📜 Rocket.java           # Modèle permettant l'assemblage de la fusée.
- ┗ 📂 service
-   ┣ 📜 LaunchController.java # Gère la logique.
-   ┗ 📜 SaveManager.java      # Gère les différentes sauvegardes ( enregistement et lecture )
-```
-
-## 3. Installation et exécution
-
-### 1. Prérequis
-- [Java Development Kit (JDK)](https://www.oracle.com/java/technologies/downloads/) 8 ou supérieur.
-- [Git](https://git-scm.com/) (optionnel, pour récupérer le projet).
-
-### 2. Cloner le projet
-
-Avant de lancer l'application, récupérez le code source sur votre machine :
+Pour lancer le projet, il est nécessaire de télécharger le projet sur l'ordinateur :
 ```bash
-git clone https://github.com/PierrotJR-Ynov-projects/b1-java-space-launch-simulator.git
-cd b1-java-space-launch-simulator
+  git clone https://github.com/PierrotJR-Ynov-projects/b1-java-space-launch-simulator
 ```
 
-### 3. Lancer l'application
+Par la suite, il est nécessaire de se diriger dans le projet :
 
-**Méthode 1 : Via un IDE (Recommandé)**
-La façon la plus simple de tester le projet est de l'ouvrir avec un IDE (comme IntelliJ IDEA, Eclipse ou VS Code). Ouvrez simplement le fichier `src/main/java/artemis/main/Simulator.java` et cliquez sur le bouton "Run" (Lecture). L'IDE s'occupera de tout configurer.
+```bash
+  cd b1-java-space-launch-simulator
+```
 
-**Méthode 2 : Via le terminal (Ligne de commande)**
-Si vous préférez utiliser le terminal, placez-vous à la racine du projet et exécutez ces deux commandes simples :
+Enfin, il suffit de compiler puis de lancer le projet : 
 
-1. Compilez le projet (Java trouvera automatiquement les autres fichiers) :
-   ```bash
-   javac -d bin -sourcepath src/main/java src/main/java/artemis/main/Simulator.java
-   ```
-2. Lancez le simulateur :
-   ```bash
-   java -cp bin artemis.main.Simulator
-   ```
+```bash
+  javac -d out -sourcepath src src/main/java/artemis/main/Simulator.java
+  
+  
+  java -cp out artemis.main.Simulator
+```
+## Architecture
 
-## 4. Aperçu de l'utilisation
+```bash
+b1-java-space-launch-simulator/
+├── .gitignore
+├── README.md
+└── src/
+    └── main/
+        └── java/
+            └── artemis/
+                ├── main/
+                │   └── Simulator.java # Cœur du projet 
+                ├── model/ # Liste des différents modèles utilisés
+                │   ├── Rocket.java
+                │   ├── booster/
+                │   │   ├── BE3.java
+                │   │   ├── Booster.java
+                │   │   ├── EAP.java
+                │   │   └── SRB.java
+                │   ├── capsule/
+                │   │   ├── Apollo.java
+                │   │   ├── Capsule.java
+                │   │   ├── CargoDragon.java
+                │   │   ├── CrewDragon.java
+                │   │   └── Orion.java
+                │   ├── launcher/
+                │   │   ├── Ariane5.java
+                │   │   ├── Falcon9.java
+                │   │   ├── Launcher.java
+                │   │   ├── SLS.java
+                │   │   └── SaturneV.java
+                │   └── mission/
+                │       ├── ISS.java
+                │       ├── Lune.java
+                │       ├── Mars.java
+                │       ├── Mission.java
+                │       ├── Orbite.java
+                │       └── Pluton.java
+                └── service/ # Gère les différentes fonctions 
+                    ├── LaunchController.java # Création de la fusée
+                    └── SaveManager.java # Système de sauvegarde
 
-Au lancement, vous arrivez sur le **Menu Principal** :
-1. **Création d'un nouveau lancement :** Suivez les étapes pour nommer votre fusée, choisir le lanceur, la capsule, ajouter des boosters et choisir votre mission.
-   Le simulateur analysera la fusée, évaluera le coût, vérifiera le carburant et tentera le lancement !
-2. **Historique des missions :** Permet de relire toutes les missions enregistrées (depuis `data/save.json`).
-3. **Quitter :** Ferme l'application en douceur.
+```
+## Diagramme UML
 
----
+Voici la représentation schématique de la logique suivie lors du projet. 
+
+![App Screenshot](https://uml.planttext.com/plantuml/png/hLZDRkCs4Bu7y3i8lcooKOmjYZrKM2pMiPsk0JinB6U1eYWAMc8S8XBfabIoQPfx-oXzZhnO-ICg8aNvByqbzlpFSBxXq5yO1vGNUTOvOdS8hm45UP1aWB4-vnGj2mx72S4n-XC67pf7dQDtmTdPMJ2z6hxyFHd5yekaha5o1rOmw0fZC4UibvCKPZtnYI62ky5JvoWGVs39E0K9rnw2gMORhlmx2p38OHJ4mZbUrUavm1YcKR0a98C0rraf4bdWHAXbn5RYo6_ife3PWC2R6vGWY7aKfAHOPl1LvDG4TroF9tIZ21tVeUKnRFDpKdVqPAho7B1RyZ24BA5epQNlasRify4AyaiHKojpgaAKx4Qf57zOHYmbx7efzW9ji7rXvoFbwfLxrl_qwOxZk7wofv9mR6M-9LtBsgJ0q3OdAOVRcmBAR7kIShYzAxf4t8bGqmwtESiARiFZjAJjQ_Dv0qWpKE3a5j8sb4vA_fjXceFlid-QO5EiSq8OXpGA4EPrrXeyJWX8VLfhYYJmcjWr8My3hnDHwCOHkjv3ssSRZWLIpWaks0K2IvGXZg2B5Aso4Sg8RKFoL8VVQdjQPID5hBeg_amdrwe_axbkn7YV8e3XHxj5IwBTezjBOXc-09cuTdwo3PV4DncE0IyeXjziouRwDjCJP-09mW46Ds4r0MjMPB0DgWFD_Z-GEeEK4Tn0Or9GAWP_2pSNGUm5r3BWRJXjUWsT64FBzoQO9W3tqrIh7kDbpOOuYdk2qdtkMYz2AkvKXEHdRiVse9wo7xvJKm6BRUDpJRACEF1KDDEOblW0q1KPKh1oRvqQmwz8uODNhw9xrQueSZKKgIQy2GrBFTmgD6YZvSZR3GJmky2Fql1VItlsinctTZytdUpUhWZV4B6JotkT7ROFZYhl1pJgJhV0-UX7-n05mNlUe_xC5XG4hs0yFtT6wVnyjwPmcc5EaZl8T-i5imX5rVvWJJuzgY8pi-gyfTaP9cAt_bGsmUTw_3eEfo-Q3iE66wiPG9fM7GOVgasb_730_AeMfHDVqdeGbIFwn9DvUQCfxwg1FFcRuz8FntWq_pOUR7WuCaZlHRyvnwXZ6n3CgHXUDhZbIC-I8WCSBWW7cUvNgWeUbONtzhQjfZ2mWnQ5VnI8mbHjNhQyGBL-D4RczUZtUmkJkm79rte9UDp5YkUIO2XNqUlQx6t4sOhkeRYHn4auS_D9l1KvIfw3uNW-6Yokvh_yFkilllhWKubUZ2UZ5YaHjV2qOyHXm8eaWN9Elcu2jI7gwNSAGIfpERPuxHC38EnqMgohIfmMgvAJAiVYDcGckLz_QyHHgqKY8kBm4ZwKERD4tli2ix7-O8R0Qsj7ZMOFLT7AuudgP-NDKWDjFfhq5-EhopWOlllwyizylEZ_FDAeCp-xVFfBo8b7kKEHxsg799_63ac_RHsYVfpA8Af7ewANBmANNExpBjaiumtw99QcpPAhBQjbnY7MjXMNK-qZ3aEj7TAwsHuKLTnZ3aLSM0v5t4pUge-2U36_7YokvsNPowlelIonoIiAkZzqBPQ9okPqF_Hwxxi1aJ6LpeM0A1wNFyDq_ST-lHXFnh7wgYDuxUrUxtDpfWgB1HSJYS6kArkV3vPOmuYKBeCMWa8bUsmNDCqZ9EzV_gNe1YdNDMUsEGQAUxW2DFM9rOnPSfsZBn2dHPxz1m00)
+
+
+## Déclaration IA
+
+L'intelligence artificielle a été utilisée pour quelques petites tâches. Elle a surtout été utilisée pour valider les différents attendus du PDF. 
+- Aide sur la documentation Java
+- Correction sur le format JSON
+- Analyse du code pour la recherche de différents bugs. 
+- Aide sur la démarche à suivre pour régler les potentielles erreurs. 
+## Auteur
+
+Projet scolaire réalisé par :
+- [@pnolann](https://github.com/pnolann)
+
