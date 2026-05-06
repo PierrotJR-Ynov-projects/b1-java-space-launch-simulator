@@ -49,4 +49,8 @@ public abstract class Capsule {
     public int getCurrentPerson() {
         return currentPerson;
     }
+
+    public int getMaxPerson() {
+        return maxPerson;
+    }
 }
