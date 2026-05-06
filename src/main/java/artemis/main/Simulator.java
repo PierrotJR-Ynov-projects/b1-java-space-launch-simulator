@@ -8,8 +8,6 @@ import artemis.model.mission.*;
 import artemis.service.LaunchController;
 import artemis.service.SaveManager;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Simulator {
@@ -51,107 +49,152 @@ public class Simulator {
     private static void createNewLaunch(Scanner scanner, LaunchController launchController, SaveManager saveManager) {
         System.out.println("\n▮▮▮ ▮▮ Création d'un nouveau lancement ▮▮ ▮▮▮");
 
-        // 1. Choose the mission
-        List<Mission> missions = List.of(new ISS(), new Lune(), new Mars(), new Orbite(), new Pluton());
+        // Choose the mission
         System.out.println("\nChoisissez une mission :");
-        for (int i = 0; i < missions.size(); i++) {
-            Mission m = missions.get(i);
-            String mannedStatus = m.getManned() ? "Oui" : "Non";
-            System.out.println((i + 1) + ". " + m.getName() + " (Habité : " + mannedStatus + ") - " + m.showDescription());
+        System.out.println("1. ISS - " + new ISS().showDescription());
+        System.out.println("2. Lune - " + new Lune().showDescription());
+        System.out.println("3. Mars - " + new Mars().showDescription());
+        System.out.println("4. Orbite - " + new Orbite().showDescription());
+        System.out.println("5. Pluton - " + new Pluton().showDescription());
+        System.out.print("Choix : ");
+        String missionChoice = scanner.nextLine();
+        Mission mission = null;
+        switch (missionChoice) {
+            case "1": mission = new ISS(); break;
+            case "2": mission = new Lune(); break;
+            case "3": mission = new Mars(); break;
+            case "4": mission = new Orbite(); break;
+            case "5": mission = new Pluton(); break;
+            default: 
+                System.out.println("Choix invalide. ISS sélectionnée par défaut."); 
+                mission = new ISS(); 
+                break;
         }
-        int missionIdx = readInt(scanner, 1, missions.size()) - 1;
-        Mission mission = missions.get(missionIdx);
 
-        System.out.println("\n--- Configuration de la fusée pour la mission : " + mission.getName() + " ---");
-        System.out.print("Entrez le nom de votre fusée : ");
+        System.out.println("\n▮▮▮ Requis de la mission sélectionnée ▮▮▮");
+        System.out.println("Distance : " + mission.getDistance() + " km");
+        System.out.println("Vol habité requis : " + (mission.getManned() ? "Oui" : "Non"));
+        System.out.println("Coefficient de carburant : " + mission.getFuelCoefficient());
+        System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮");
+
+        System.out.print("\nEntrez le nom de votre fusée : ");
         String rocketName = scanner.nextLine();
 
-        // 2. Choose a launcher
-        List<Launcher> launchers = List.of(new Ariane5(), new Falcon9(), new SLS(), new SaturneV());
+        // Choose a launcher
         System.out.println("\nChoisissez un lanceur :");
-        for (int i = 0; i < launchers.size(); i++) {
-            Launcher l = launchers.get(i);
-            System.out.println((i + 1) + ". " + l.getName() + " (Max boosters : " + l.getMaxBooster() + ", Fuel : " + l.getMaxFuel() + "t, Payload : " + l.getPayLoad() + "t)");
+        System.out.println("1. Ariane 5 (Vol habité : " + (new Ariane5().isManned() ? "Oui" : "Non") + ")");
+        System.out.println("2. Falcon 9 (Vol habité : " + (new Falcon9().isManned() ? "Oui" : "Non") + ")");
+        System.out.println("3. SLS (Vol habité : " + (new SLS().isManned() ? "Oui" : "Non") + ")");
+        System.out.println("4. Saturne V (Vol habité : " + (new SaturneV().isManned() ? "Oui" : "Non") + ")");
+        System.out.print("Choix : ");
+        String launcherChoice = scanner.nextLine();
+        Launcher launcher = null;
+        switch (launcherChoice) {
+            case "1": launcher = new Ariane5(); break;
+            case "2": launcher = new Falcon9(); break;
+            case "3": launcher = new SLS(); break;
+            case "4": launcher = new SaturneV(); break;
+            default: 
+                System.out.println("Choix invalide. Ariane 5 sélectionné par défaut."); 
+                launcher = new Ariane5(); 
+                break;
         }
-        int launcherIdx = readInt(scanner, 1, launchers.size()) - 1;
-        Launcher launcher = launchers.get(launcherIdx);
 
-        // 3. Choose the capsule
-        List<Capsule> capsules = List.of(new Apollo(), new CargoDragon(), new CrewDragon(), new Orion());
+        System.out.println("\n▮▮▮ Paramètres du lanceur sélectionné (" + launcher.getName() + ") ▮▮▮");
+        System.out.println("Charge utile max : " + launcher.getPayLoad() + " t");
+        System.out.println("Carburant max : " + launcher.getMaxFuel() + " t");
+        System.out.println("Boosters max autorisés : " + launcher.getMaxBooster());
+        System.out.println("Prix : " + launcher.getPrice() + " M€");
+        System.out.println("Vol habité autorisé : " + (launcher.isManned() ? "Oui" : "Non"));
+        System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮");
+
+        // Choose the capsule
         System.out.println("\nChoisissez une capsule :");
-        for (int i = 0; i < capsules.size(); i++) {
-            Capsule c = capsules.get(i);
-            String type = c.isManned() ? "Habité (Max : " + c.getCurrentPerson() + "/" + (c.isManned() ? "3-7" : "0") + ")" : "Cargo";
-            // Note: I'll use a generic display since max capacity is hidden in subclasses usually, 
-            // but I'll use isManned and mass which are in the base class.
-            System.out.println((i + 1) + ". " + c.getName() + " (" + (c.isManned() ? "Habité" : "Cargo") + ", Masse : " + c.getMass() + "t)");
+        System.out.println("1. Apollo (Vol habité : " + (new Apollo().isManned() ? "Oui" : "Non") + ", Masse : " + new Apollo().getMass() + " t)");
+        System.out.println("2. Cargo Dragon (Vol habité : " + (new CargoDragon().isManned() ? "Oui" : "Non") + ", Masse : " + new CargoDragon().getMass() + " t)");
+        System.out.println("3. Crew Dragon (Vol habité : " + (new CrewDragon().isManned() ? "Oui" : "Non") + ", Masse : " + new CrewDragon().getMass() + " t)");
+        System.out.println("4. Orion (Vol habité : " + (new Orion().isManned() ? "Oui" : "Non") + ", Masse : " + new Orion().getMass() + " t)");
+        System.out.print("Choix : ");
+        String capsuleChoice = scanner.nextLine();
+        Capsule capsule = null;
+        switch (capsuleChoice) {
+            case "1": capsule = new Apollo(); break;
+            case "2": capsule = new CargoDragon(); break;
+            case "3": capsule = new CrewDragon(); break;
+            case "4": capsule = new Orion(); break;
+            default: 
+                System.out.println("Choix invalide. Apollo sélectionné par défaut."); 
+                capsule = new Apollo(); 
+                break;
         }
-        int capsuleIdx = readInt(scanner, 1, capsules.size()) - 1;
-        Capsule capsule = capsules.get(capsuleIdx);
 
-        // 4. Passenger selection (Step 1)
+        System.out.println("\n▮▮▮ Paramètres de la capsule sélectionnée (" + capsule.getName() + ") ▮▮▮");
+        System.out.println("Masse : " + capsule.getMass() + " t");
+        System.out.println("Prix : " + capsule.getPrice() + " M€");
+        System.out.println("Vol habité possible : " + (capsule.isManned() ? "Oui" : "Non"));
         if (capsule.isManned()) {
-            System.out.print("Combien de passagers souhaitez-vous embarquer ? (Max : " + getMaxPersons(capsule) + ") : ");
-            int nbPassagers = readInt(scanner, 0, getMaxPersons(capsule));
-            capsule.canAddPerson(nbPassagers);
+            System.out.println("Capacité maximale : " + capsule.getMaxPerson() + " personnes");
+        }
+        System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮");
+
+        if (capsule.isManned()) {
+            boolean validCrew = false;
+            while (!validCrew) {
+                System.out.print("\nEntrez le nombre de personnes à envoyer dans la capsule : ");
+                try {
+                    int nbPerson = Integer.parseInt(scanner.nextLine());
+                    capsule.canAddPerson(nbPerson);
+                    if (capsule.getCurrentPerson() == nbPerson) {
+                        validCrew = true;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Entrée invalide. Veuillez entrer un nombre entier.");
+                }
+            }
         }
 
         Rocket rocket = new Rocket(rocketName, launcher, capsule);
 
-        // 5. Add boosters
-        List<Booster> availableBoosters = List.of(new BE3(), new EAP(), new SRB());
+        // Add boosters
         boolean addMoreBoosters = true;
         while (addMoreBoosters && rocket.getBoosters().size() < launcher.getMaxBooster()) {
             System.out.println("\nAjouter un booster ? (Boosters actuels : " + rocket.getBoosters().size() + " / " + launcher.getMaxBooster() + ")");
-            for (int i = 0; i < availableBoosters.size(); i++) {
-                Booster b = availableBoosters.get(i);
-                System.out.println((i + 1) + ". " + b.getName() + " (Poussée : " + b.getExtraBoost() + "kN, Masse : " + b.getMass() + "t)");
-            }
-            System.out.println((availableBoosters.size() + 1) + ". Terminer l'ajout de boosters");
+            System.out.println("1. BE-3 (Masse : " + new BE3().getMass() + " t)");
+            System.out.println("2. EAP (Masse : " + new EAP().getMass() + " t)");
+            System.out.println("3. SRB (Masse : " + new SRB().getMass() + " t)");
+            System.out.println("4. Terminer l'ajout de boosters");
+            System.out.print("Choix : ");
+            String boosterChoice = scanner.nextLine();
+            Booster newBooster = null;
             
-            int boosterChoice = readInt(scanner, 1, availableBoosters.size() + 1);
-            if (boosterChoice <= availableBoosters.size()) {
-                // Create a NEW instance of the booster
-                Booster selected = availableBoosters.get(boosterChoice - 1);
-                try {
-                    rocket.addBooster(selected.getClass().getDeclaredConstructor().newInstance());
-                } catch (Exception e) {
-                    System.out.println("Erreur lors de l'ajout du booster.");
-                }
-            } else {
-                addMoreBoosters = false;
+            switch (boosterChoice) {
+                case "1": newBooster = new BE3(); break;
+                case "2": newBooster = new EAP(); break;
+                case "3": newBooster = new SRB(); break;
+                case "4": addMoreBoosters = false; break;
+                default: System.out.println("Choix invalide."); break;
+            }
+
+            if (newBooster != null) {
+                rocket.addBooster(newBooster);
+                System.out.println("\n▮▮▮ Paramètres du booster ajouté (" + newBooster.getName() + ") ▮▮▮");
+                System.out.println("Masse : " + newBooster.getMass() + " t");
+                System.out.println("Prix : " + newBooster.getPrice() + " M€");
+                System.out.println("Puissance supplémentaire : " + newBooster.getExtraBoost() + " kN");
+                System.out.println("▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮ ▮▮▮");
             }
         }
+        
+        if (rocket.getBoosters().size() >= launcher.getMaxBooster()) {
+            System.out.println("Limite de boosters atteinte pour ce lanceur.");
+        }
 
-        // 6. Launch
+        // Launch
         System.out.println("\nPrêt pour le lancement...");
-        boolean success = launchController.simulateLaunch(rocket, mission);
+        launchController.simulateLaunch(rocket, mission);
         double totalCost = launchController.calculateTotalPrice(rocket);
 
-        // 7. Save
-        saveManager.saveLaunch(rocket, mission, success, totalCost);
-    }
-
-    // Helper for safe integer input (Step 3)
-    private static int readInt(Scanner scanner, int min, int max) {
-        while (true) {
-            try {
-                System.out.print("Votre choix : ");
-                int val = Integer.parseInt(scanner.nextLine());
-                if (val >= min && val <= max) return val;
-                System.out.println("Veuillez choisir un nombre entre " + min + " et " + max + ".");
-            } catch (NumberFormatException e) {
-                System.out.println("Entrée invalide. Veuillez saisir un nombre.");
-            }
-        }
-    }
-
-    // Helper to get max persons (since it's private in Capsule but we can't change it yet)
-    // For now, I'll use a simple mapping or just accept that the Capsule class needs a getter for maxPerson
-    private static int getMaxPersons(Capsule c) {
-        if (c instanceof Apollo) return 3;
-        if (c instanceof CrewDragon) return 7;
-        if (c instanceof Orion) return 4;
-        return 0;
+        // Save
+        saveManager.saveLaunch(rocket, mission, true, totalCost);
     }
 }
