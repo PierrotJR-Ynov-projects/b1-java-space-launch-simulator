@@ -1,14 +1,14 @@
 
 # Artemis - Projet java B1 
 
-Artemis est un simulateur de lancement spatial. Différents choix sont permis (lanceur, capsules ou boosters) avec un choix varié de missions. 
+Artemis est un simulateur de lancement spatial. Différents choix sont permis (lanceurs, capsules ou boosters) avec un choix varié de missions. 
 
 ## Fonctionnalités
 
 - Création de fusées personnalisées.
 - Gestion de la compatibilité (missions habitées vs capsules cargo).
 - Calcul dynamique du carburant nécessaire et de la charge utile (payload).
-- Historique des lancements sauvegardé en format JSON.
+- Historique des lancements sauvegardé au format JSON.
 
 
 ## Lancement du projet
@@ -24,7 +24,7 @@ Par la suite, il est nécessaire de se diriger dans le projet :
   cd b1-java-space-launch-simulator
 ```
 
-Enfin il suffit de compiler puis lancer le projet : 
+Enfin, il suffit de compiler puis de lancer le projet : 
 
 ```bash
   javac -d out -sourcepath src src/main/java/artemis/main/Simulator.java
@@ -43,7 +43,7 @@ b1-java-space-launch-simulator/
         └── java/
             └── artemis/
                 ├── main/
-                │   └── Simulator.java # Coeur du projet 
+                │   └── Simulator.java # Cœur du projet 
                 ├── model/ # Liste des différents modèles utilisés
                 │   ├── Rocket.java
                 │   ├── booster/
@@ -85,7 +85,7 @@ Voici la représentation schématique de la logique suivie lors du projet.
 ## Déclaration IA
 
 L'intelligence artificielle a été utilisée pour quelques petites tâches. Elle a surtout été utilisée pour valider les différents attendus du PDF. 
-- Aide sur la documentation java
+- Aide sur la documentation Java
 - Correction sur le format JSON
 - Analyse du code pour la recherche de différents bugs. 
 - Aide sur la démarche à suivre pour régler les potentielles erreurs. 
